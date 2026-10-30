@@ -1,9 +1,10 @@
 {
-  "name": "Game Maps – Magyarország",
-  "short_name": "Game Maps",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#10151d",
-  "theme_color": "#10151d",
-  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "name":"GAME MAPS – Night City",
+  "short_name":"GAME MAPS",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#080b16",
+  "theme_color":"#080b16",
+  "icons":[{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
 }

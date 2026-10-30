@@ -1,126 +1,136 @@
 <!doctype html>
 <html lang="hu">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <meta name="theme-color" content="#10151d" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Game Maps" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="apple-touch-icon" href="icon.svg" />
-  <link href="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css" rel="stylesheet" />
-  <title>Game Maps – Magyarország</title>
-  <style>
-    :root { color-scheme: dark; --bg:#10151d; --panel:#171f2b; --line:#2b394b; --blue:#42a5ff; --gold:#f4b942; --muted:#9aa9bb; }
-    * { box-sizing:border-box }
-    html,body { margin:0; width:100%; height:100%; overflow:hidden; background:var(--bg); color:#f5f7fb; font-family:system-ui,-apple-system,Segoe UI,sans-serif }
-    #map { position:absolute; inset:0; }
-    .top { position:absolute; z-index:5; top: max(12px, env(safe-area-inset-top)); left:12px; right:12px; display:flex; gap:8px; align-items:center }
-    .brand { background:#111a27ed; border:1px solid var(--line); border-radius:14px; padding:10px 12px; font-weight:800; letter-spacing:.08em; white-space:nowrap; box-shadow:0 8px 28px #0007 }
-    .search { flex:1; min-width:0; display:flex; gap:8px; background:#111a27ed; border:1px solid var(--line); border-radius:14px; padding:7px 9px; box-shadow:0 8px 28px #0007 }
-    .search input { width:100%; min-width:0; color:white; background:transparent; border:0; outline:0; font-size:14px }
-    button { color:white; background:#223249; border:1px solid #3a506b; border-radius:11px; padding:9px 11px; font-weight:700; cursor:pointer }
-    button:active { transform:scale(.98) }
-    .side { position:absolute; z-index:5; right:12px; top:90px; display:grid; gap:8px }
-    .side button { width:44px; height:44px; padding:0; font-size:19px; background:#111a27ed; box-shadow:0 6px 20px #0006 }
-    .bottom { position:absolute; z-index:5; left:12px; right:12px; bottom:max(12px,env(safe-area-inset-bottom)); background:#111a27f2; border:1px solid var(--line); border-radius:18px; padding:12px 14px; box-shadow:0 10px 35px #0008 }
-    .bottomrow { display:flex; align-items:center; justify-content:space-between; gap:12px }
-    .status { color:var(--muted); font-size:12px; margin-top:5px }
-    .filters { display:flex; flex-wrap:wrap; gap:7px; margin-top:11px }
-    .chip { font-size:12px; padding:7px 9px; border-radius:999px; background:#202d3d; border:1px solid #35465c; color:#dce7f4 }
-    .chip.active { border-color:var(--blue); background:#12395c; color:white }
-    .marker { width:34px; height:34px; display:grid; place-items:center; border-radius:11px; border:2px solid #e8f2ff; box-shadow:0 4px 12px #0009; font-size:19px; background:#26384f }
-    .marker.shop { background:#9a6720 }.marker.fuel { background:#a33b32 }.marker.food { background:#477b48 }.marker.pharmacy { background:#276e86 }
-    .maplibregl-ctrl-group { background:#111a27 !important; border:1px solid var(--line) !important }
-    .maplibregl-ctrl button { background-color:#111a27 !important }
-    .maplibregl-ctrl button span { filter:invert(1) }
-    .maplibregl-ctrl-attrib { background:#111a27cc !important; color:#cbd5e1 !important }
-    .maplibregl-ctrl-attrib a { color:#8ecbff !important }
-    @media (max-width:430px) { .brand { font-size:12px; padding:10px 9px }.search input{font-size:13px}.bottom{padding:11px}.filters{gap:5px} }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#080b16">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GAME MAPS">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon.svg">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css">
+<title>GAME MAPS // Night City</title>
+<style>
+:root{--bg:#080b16;--panel:#0d1424ee;--line:#26354d;--cyan:#00e5ff;--pink:#ff2bd6;--muted:#91a5bd;--text:#e9f7ff}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,sans-serif}
+#map{position:absolute;inset:0;background:#080b16}
+.top{position:absolute;z-index:5;top:max(12px,env(safe-area-inset-top));left:12px;right:12px;display:flex;gap:8px;align-items:center}
+.brand{padding:11px 12px;border:1px solid #00e5ff88;border-radius:12px;background:#091321ed;box-shadow:0 0 18px #00e5ff20;font-size:12px;font-weight:900;letter-spacing:.12em;white-space:nowrap}
+.brand b{color:var(--cyan)}
+.search{display:flex;gap:6px;flex:1;min-width:0;padding:6px;background:#091321ed;border:1px solid var(--line);border-radius:12px;box-shadow:0 0 18px #0008}
+.search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:white;font-size:14px}
+button{font:inherit;color:var(--text);background:#142239;border:1px solid #34516d;border-radius:10px;padding:9px 11px;font-weight:750}
+button:active{transform:scale(.97)}
+.search button{background:#073544;border-color:#00a9c4;color:#bffaff;padding:7px 11px}
+.side{position:absolute;z-index:5;right:12px;top:88px;display:grid;gap:8px}
+.side button{width:44px;height:44px;padding:0;font-size:20px;background:#091321ed;border-color:#31516b;box-shadow:0 0 15px #00e5ff18}
+.bottom{position:absolute;z-index:5;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));padding:12px;background:var(--panel);border:1px solid #28435a;border-radius:16px;box-shadow:0 0 25px #000a,0 0 18px #00e5ff12}
+.head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.head strong{font-size:11px;letter-spacing:.1em;color:var(--cyan)}
+.status{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.35}
+.filters{display:flex;gap:7px;overflow-x:auto;margin-top:10px;padding-bottom:1px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;font-size:11px;padding:8px 10px;border-radius:999px;background:#111d30;border-color:#2b405a;color:#b7c9dc}
+.chip.active{background:#063442;border-color:#00d9f5;color:#d9fcff;box-shadow:0 0 12px #00d9f522}
+.poi{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#101b2b;border:1.5px solid var(--cyan);box-shadow:0 0 12px #00e5ff77,0 3px 8px #000b;font-size:18px}
+.poi.fuel{border-color:#ffb02e;box-shadow:0 0 12px #ffb02e77}.poi.shop{border-color:#ff2bd6;box-shadow:0 0 12px #ff2bd677}.poi.food{border-color:#b8ff4a;box-shadow:0 0 12px #b8ff4a66}.poi.pharmacy{border-color:#00e5ff}
+.poi.user{width:22px;height:22px;border-radius:50%;background:#00e5ff;border:3px solid white;box-shadow:0 0 0 7px #00e5ff33,0 0 20px #00e5ff}
+.maplibregl-ctrl-group{background:#0b1422!important;border:1px solid #28435a!important}.maplibregl-ctrl button{background:#0b1422!important}.maplibregl-ctrl button span{filter:invert(1)}.maplibregl-ctrl-attrib{background:#091321cc!important;color:#a9bed3!important}.maplibregl-ctrl-attrib a{color:#00dff5!important}
+.maplibregl-popup-content{background:#0c1728;color:#eafaff;border:1px solid #00d9f5;border-radius:10px;box-shadow:0 0 18px #00d9f533;font-family:inherit}.maplibregl-popup-tip{border-top-color:#0c1728!important}
+@media(max-width:430px){.brand{font-size:10px;padding:10px 8px}.search input{font-size:12px}.bottom{padding:10px}.head strong{font-size:10px}}
+</style>
 </head>
 <body>
-  <div id="map"></div>
-  <div class="top">
-    <div class="brand">⚔ GAME MAPS</div>
-    <form class="search" id="searchForm"><input id="searchInput" placeholder="Hely vagy cím keresése…" autocomplete="off"/><button type="submit">⌕</button></form>
-  </div>
-  <div class="side">
-    <button id="locate" title="Saját helyzet">◎</button>
-    <button id="zoomIn" title="Nagyítás">＋</button>
-    <button id="zoomOut" title="Kicsinyítés">－</button>
-  </div>
-  <section class="bottom">
-    <div class="bottomrow"><div><strong>MAGYARORSZÁG • EXPLORER MODE</strong><div class="status" id="status">Térkép betöltése…</div></div><button id="reset">HU</button></div>
-    <div class="filters">
-      <button class="chip active" data-kind="all">✦ Összes</button>
-      <button class="chip active" data-kind="shop">🛒 Boltok</button>
-      <button class="chip active" data-kind="fuel">⛽ Benzinkút</button>
-      <button class="chip active" data-kind="food">🍺 Éttermek</button>
-      <button class="chip active" data-kind="pharmacy">✚ Gyógyszertár</button>
-    </div>
-  </section>
+<div id="map"></div>
+<div class="top">
+ <div class="brand">◈ <b>GAME</b> MAPS</div>
+ <form class="search" id="searchForm"><input id="searchInput" placeholder="Hely vagy cím keresése…" autocomplete="off"><button type="submit">⌕</button></form>
+</div>
+<div class="side">
+ <button id="locate" aria-label="Saját helyzet">◎</button>
+ <button id="zoomIn" aria-label="Nagyítás">＋</button>
+ <button id="zoomOut" aria-label="Kicsinyítés">－</button>
+ <button id="tilt" aria-label="Nézet váltása">3D</button>
+</div>
+<section class="bottom">
+ <div class="head"><div><strong>NIGHT CITY // HUNGARY</strong><div class="status" id="status">Térkép betöltése…</div></div><button id="reset">HU</button></div>
+ <div class="filters">
+  <button class="chip active" data-kind="all">✦ Összes</button>
+  <button class="chip active" data-kind="shop">◈ Boltok</button>
+  <button class="chip active" data-kind="fuel">⛽ Benzinkút</button>
+  <button class="chip active" data-kind="food">◆ Éttermek</button>
+  <button class="chip active" data-kind="pharmacy">✚ Gyógyszertár</button>
+ </div>
+</section>
 <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
 <script>
-  const statusEl = document.getElementById('status');
-  const map = new maplibregl.Map({
-    container: 'map',
-    style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-    center: [19.2, 47.2], zoom: 6.3, pitch: 35, bearing: 0,
-    attributionControl: true
-  });
-  map.addControl(new maplibregl.NavigationControl({showCompass:true}), 'bottom-right');
-  map.on('load', () => { statusEl.textContent = 'Térkép kész • GPS-re vár'; loadDemoMarkers(); });
-  map.on('error', () => { statusEl.textContent = 'Térképhiba – ellenőrizd az internetkapcsolatot'; });
-  const markers = [];
-  const demo = [
-    {name:'Minta kereskedő', coords:[19.0402,47.4979], kind:'shop', icon:'🛒'},
-    {name:'Minta benzinkút', coords:[19.055,47.505], kind:'fuel', icon:'⛽'},
-    {name:'Minta fogadó', coords:[19.030,47.491], kind:'food', icon:'🍺'},
-    {name:'Minta gyógyító', coords:[19.047,47.488], kind:'pharmacy', icon:'✚'}
-  ];
-  function addMarker(item) {
-    const el=document.createElement('div'); el.className='marker '+item.kind; el.textContent=item.icon;
-    const popup=new maplibregl.Popup({offset:20}).setHTML(`<strong>${item.name}</strong><br><small>Demó jelölő – nem valós üzletadat</small>`);
-    const marker=new maplibregl.Marker({element:el}).setLngLat(item.coords).setPopup(popup).addTo(map);
-    markers.push({marker,kind:item.kind});
-  }
-  function loadDemoMarkers(){ demo.forEach(addMarker); statusEl.textContent='Demó mód • A jelölők mintaadatok, nem valódi üzletek'; }
-  document.querySelectorAll('.chip').forEach(btn=>btn.addEventListener('click',()=>{
-    const kind=btn.dataset.kind;
-    if(kind==='all'){
-      const active=btn.classList.toggle('active');
-      document.querySelectorAll('.chip:not([data-kind="all"])').forEach(x=>x.classList.toggle('active',active));
-    } else btn.classList.toggle('active');
-    const enabled=new Set([...document.querySelectorAll('.chip.active')].map(x=>x.dataset.kind));
-    markers.forEach(x=>x.marker.getElement().style.display=(enabled.has('all')||enabled.has(x.kind))?'grid':'none');
-  }));
-  document.getElementById('locate').onclick=()=>{
-    if(!navigator.geolocation){statusEl.textContent='A böngésző nem támogatja a GPS-t';return;}
-    statusEl.textContent='GPS-helyzet lekérése…';
-    navigator.geolocation.getCurrentPosition(pos=>{
-      const c=[pos.coords.longitude,pos.coords.latitude];
-      map.flyTo({center:c,zoom:15,pitch:45});
-      new maplibregl.Marker({color:'#42a5ff'}).setLngLat(c).setPopup(new maplibregl.Popup().setText('Itt vagy most')).addTo(map).togglePopup();
-      statusEl.textContent='GPS-helyzet sikeresen lekérve';
-    },err=>{statusEl.textContent='GPS nem érhető el: '+err.message;},{enableHighAccuracy:true,timeout:12000});
-  };
-  document.getElementById('zoomIn').onclick=()=>map.zoomIn();
-  document.getElementById('zoomOut').onclick=()=>map.zoomOut();
-  document.getElementById('reset').onclick=()=>map.flyTo({center:[19.2,47.2],zoom:6.3,pitch:35,bearing:0});
-  document.getElementById('searchForm').addEventListener('submit',async e=>{
-    e.preventDefault(); const q=document.getElementById('searchInput').value.trim(); if(!q)return;
-    statusEl.textContent='Hely keresése…';
-    try {
-      const url='https://nominatim.openstreetmap.org/search?format=jsonv2&country=Hungary&limit=1&q='+encodeURIComponent(q);
-      const res=await fetch(url,{headers:{'Accept-Language':'hu'}}); const data=await res.json();
-      if(!data.length){statusEl.textContent='Nem találtam ilyen helyet Magyarországon';return;}
-      const p=data[0]; map.flyTo({center:[Number(p.lon),Number(p.lat)],zoom:15,pitch:40});
-      statusEl.textContent=p.display_name;
-    } catch { statusEl.textContent='A keresés most nem sikerült'; }
-  });
-  if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+const $=id=>document.getElementById(id), statusEl=$('status');
+const map=new maplibregl.Map({container:'map',style:'https://tiles.openfreemap.org/styles/dark',center:[19.2,47.2],zoom:6.2,pitch:38,bearing:-8,attributionControl:true});
+map.addControl(new maplibregl.NavigationControl({showCompass:true}),'bottom-right');
+let userMarker=null, poiMarkers=[], activeKinds=new Set(['shop','fuel','food','pharmacy']), lastQuery=0, queryTimer=null, is3d=true;
+map.on('load',()=>{statusEl.textContent='ONLINE // Valódi térkép betöltve'; schedulePOI();});
+map.on('error',()=>{statusEl.textContent='Térképhiba – ellenőrizd az internetkapcsolatot';});
+function category(tags){
+ if(tags.amenity==='fuel')return 'fuel';
+ if(tags.shop || tags.amenity==='marketplace' || tags.shop==='supermarket')return 'shop';
+ if(['restaurant','cafe','fast_food','bar','pub','food_court'].includes(tags.amenity))return 'food';
+ if(tags.amenity==='pharmacy')return 'pharmacy';
+ return null;
+}
+const icons={shop:'◈',fuel:'⛽',food:'◆',pharmacy:'✚'};
+function clearPOI(){poiMarkers.forEach(x=>x.remove());poiMarkers=[];}
+function addPOI(el){
+ const kind=category(el.tags||{}); if(!kind || !activeKinds.has(kind))return;
+ const lat=Number(el.lat ?? el.center?.lat), lon=Number(el.lon ?? el.center?.lon); if(!Number.isFinite(lat)||!Number.isFinite(lon))return;
+ const name=el.tags?.name || ({shop:'Üzlet',fuel:'Benzinkút',food:'Vendéglátóhely',pharmacy:'Gyógyszertár'}[kind]);
+ const node=document.createElement('div');node.className='poi '+kind;node.textContent=icons[kind];
+ const safeName=String(name).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const detail=[el.tags?.['addr:street'],el.tags?.['addr:housenumber'],el.tags?.['addr:city']].filter(Boolean).join(' ');
+ const popup=new maplibregl.Popup({offset:18}).setHTML(`<b>${safeName}</b>${detail?`<br><small>${detail}</small>`:''}<br><small>OpenStreetMap-adat</small>`);
+ poiMarkers.push(new maplibregl.Marker({element:node}).setLngLat([lon,lat]).setPopup(popup).addTo(map));
+}
+async function loadPOI(){
+ const now=Date.now();if(now-lastQuery<10000)return;lastQuery=now;
+ const b=map.getBounds(),s=b.getSouth(),w=b.getWest(),n=b.getNorth(),e=b.getEast();
+ if(map.getZoom()<12){statusEl.textContent='Nagyíts közelebb a valódi helyek betöltéséhez';clearPOI();return;}
+ statusEl.textContent='Közeli helyek lekérése OpenStreetMapből…';
+ const box=`${s},${w},${n},${e}`;
+ const query=`[out:json][timeout:15];(node["shop"](${box});way["shop"](${box});relation["shop"](${box});node["amenity"~"fuel|restaurant|cafe|fast_food|bar|pub|pharmacy"](${box});way["amenity"~"fuel|restaurant|cafe|fast_food|bar|pub|pharmacy"](${box});relation["amenity"~"fuel|restaurant|cafe|fast_food|bar|pub|pharmacy"](${box}););out center tags;`;
+ try{
+  const r=await fetch('https://overpass-api.de/api/interpreter',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:'data='+encodeURIComponent(query)});
+  if(!r.ok)throw new Error('Overpass '+r.status);
+  const data=await r.json();clearPOI();(data.elements||[]).slice(0,180).forEach(addPOI);
+  statusEl.textContent=`${poiMarkers.length} valódi hely betöltve • OpenStreetMap`;
+ }catch(err){statusEl.textContent='A helyadat-szerver most nem elérhető. Próbáld később.';}
+}
+function schedulePOI(){clearTimeout(queryTimer);queryTimer=setTimeout(loadPOI,1300);}
+map.on('moveend',schedulePOI);
+document.querySelectorAll('.chip').forEach(btn=>btn.addEventListener('click',()=>{
+ const k=btn.dataset.kind;
+ if(k==='all'){const on=!btn.classList.contains('active');document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',on));activeKinds=on?new Set(['shop','fuel','food','pharmacy']):new Set();}
+ else{btn.classList.toggle('active');if(btn.classList.contains('active'))activeKinds.add(k);else activeKinds.delete(k);document.querySelector('[data-kind="all"]').classList.toggle('active',activeKinds.size===4);}
+ clearPOI();schedulePOI();
+}));
+$('locate').onclick=()=>{
+ if(!navigator.geolocation){statusEl.textContent='A böngésző nem támogatja a GPS-t';return;}
+ statusEl.textContent='GPS-helyzet lekérése…';
+ navigator.geolocation.getCurrentPosition(pos=>{
+  const c=[pos.coords.longitude,pos.coords.latitude];
+  if(userMarker)userMarker.remove();const el=document.createElement('div');el.className='poi user';
+  userMarker=new maplibregl.Marker({element:el}).setLngLat(c).setPopup(new maplibregl.Popup().setText('Jelenlegi helyzeted')).addTo(map);
+  map.flyTo({center:c,zoom:15,pitch:50});statusEl.textContent='GPS AKTÍV // Pontosság: ±'+Math.round(pos.coords.accuracy)+' m';
+ },err=>statusEl.textContent='GPS-hiba: '+err.message,{enableHighAccuracy:true,timeout:15000,maximumAge:10000});
+};
+$('zoomIn').onclick=()=>map.zoomIn();$('zoomOut').onclick=()=>map.zoomOut();
+$('tilt').onclick=()=>{is3d=!is3d;map.easeTo({pitch:is3d?50:0,bearing:is3d?-8:0});$('tilt').textContent=is3d?'3D':'2D';};
+$('reset').onclick=()=>map.flyTo({center:[19.2,47.2],zoom:6.2,pitch:38,bearing:-8});
+$('searchForm').addEventListener('submit',async ev=>{
+ ev.preventDefault();const q=$('searchInput').value.trim();if(!q)return;statusEl.textContent='Hely keresése…';
+ try{const u='https://nominatim.openstreetmap.org/search?format=jsonv2&country=Hungary&limit=1&q='+encodeURIComponent(q);
+ const r=await fetch(u,{headers:{'Accept-Language':'hu'}});const d=await r.json();if(!d.length){statusEl.textContent='Nincs találat Magyarországon';return;}
+ map.flyTo({center:[+d[0].lon,+d[0].lat],zoom:15,pitch:45});statusEl.textContent=d[0].display_name;
+ }catch{statusEl.textContent='A keresés most nem sikerült';}
+});
 </script>
-</body>
-</html>
+</body></html>
